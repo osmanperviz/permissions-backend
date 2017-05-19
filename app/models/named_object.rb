@@ -1,0 +1,2 @@
+class NamedObject < ApplicationRecord
+end
