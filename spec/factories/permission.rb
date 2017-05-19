@@ -5,6 +5,7 @@ FactoryGirl.define do
     after(:create) do |permission|
       permission.subjects << create(:subject)
       permission.groups << create(:group)
+      permission.users << create(:user)
     end
   end
 end
