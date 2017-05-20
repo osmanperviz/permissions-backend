@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :groups, only: [:index, :show] do
     member do
       post :add_user
-      post :add_to_group
+      post :add_permission
     end
   end
 end

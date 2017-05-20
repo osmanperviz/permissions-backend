@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AssignPermisionService
+class AssignPermisionToUserService
   include Interactor
   delegate :permission, :user, :fail!, to: :context
 
@@ -13,7 +13,6 @@ class AssignPermisionService
 
   def assign_permision
     user.permissions << permission
-    user.save
   end
 
   def check_parameters

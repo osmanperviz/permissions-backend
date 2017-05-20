@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-RSpec.describe AssignPermisionService, :service do
-  let(:user) { create(:user) }
+RSpec.describe AssignPermissionToGroupService, :service do
+  let(:group) { create(:group) }
   let(:permission) { create(:permission) }
-  let!(:result) { described_class.call(permission: permission, user: user) }
+  let!(:result) { described_class.call(permission: permission, group: group) }
 
   describe '#call' do
     context 'Invalid  Data' do
-      context 'Invalid user' do
-        let(:user) { nil }
+      context 'Invalid group' do
+        let(:group) { nil }
         it 'return error' do
           expect(result.failure?).to be_truthy
         end
@@ -24,8 +24,8 @@ RSpec.describe AssignPermisionService, :service do
       it 'return success' do
         expect(result.success?).to be_truthy
       end
-      it 'assign permission to user' do
-        expect(user.reload.permissions).to include(permission)
+      it 'assign permission to group' do
+        expect(group.reload.permissions).to include(permission)
       end
     end
   end

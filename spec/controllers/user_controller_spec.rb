@@ -24,8 +24,8 @@ RSpec.describe UsersController, :controller do
   end
 
   context '#add_premission' do
-    it 'call AssignPermisionService ' do
-      expect(AssignPermisionService).to receive(:call).and_call_original
+    it 'call AssignPermisionToUserService ' do
+      expect(AssignPermisionToUserService).to receive(:call).and_call_original
       post :add_premission, id: user, permission_id: permission.id
     end
     it 'render error object on return false' do
@@ -35,7 +35,7 @@ RSpec.describe UsersController, :controller do
       expect(parsed_response['status']).to eq 404
     end
     it 'render user object with assosiation on success' do
-      expect(AssignPermisionService).to receive(:call).and_call_original
+      expect(AssignPermisionToUserService).to receive(:call).and_call_original
       post :add_premission, id: user, permission_id: permission.id
       parsed_response = JSON.parse(response.body)
       expect(parsed_response).to have_key('username')

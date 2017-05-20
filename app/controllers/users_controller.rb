@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
   def add_premission
     permission = Permission.find(params[:permission_id])
-    result = AssignPermisionService.call(permission: permission, user: @user)
+    result = AssignPermisionToUserService.call(permission: permission, user: @user)
     return render json: { error: result.error, status: 404 } unless result.success?
     render 'users/add_premission.json.jbuilder'
   end
