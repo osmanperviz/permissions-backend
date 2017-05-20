@@ -42,4 +42,18 @@ RSpec.describe UsersController, :controller do
       expect(parsed_response).to have_key('username')
     end
   end
+
+  context '#remove_permissions' do
+    it 'call RemovePermissionsFromUsersService' do
+      expect(RemovePermissionsFromUsersService).to receive(:call).and_call_original
+      get :remove_permissions, id: user
+    end
+    it 'render user object with assosiation on success' do
+      expect(RemovePermissionsFromUsersService).to receive(:call).and_call_original
+      get :remove_permissions, id: user
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response).to have_key('username')
+    end
+
+  end
 end

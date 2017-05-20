@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :load_user, only: %i[show add_premission]
+  before_action :load_user, only: %i[show add_premission remove_permissions]
 
   def index
     @users = User.all.includes(:permissions, :groups, :subjects)
@@ -18,6 +18,11 @@ class UsersController < ApplicationController
     result = AssignPermisionToUserService.call(permission: permission, subject: subject, user: @user)
     return render json: { error: result.error, status: 404 } unless result.success?
     render 'users/add_premission.json.jbuilder'
+  end
+
+  def remove_permissions
+    RemovePermissionsFromUsersService.call(user: @user)
+    render 'users/show.json.jbuilder'
   end
 
   def load_user

@@ -6,6 +6,7 @@ RSpec.describe GroupsController, :controller do
   let(:permission) { create(:permission) }
   let(:subject_object) { create(:subject) }
   let!(:users_with_permissions) { create_list(:user_with_permissions, 2) }
+  let!(:users_with_group) { create(:user_with_groups) }
 
   it { is_expected.to be_a(ApplicationController) }
 
@@ -62,6 +63,36 @@ RSpec.describe GroupsController, :controller do
       parsed_response = JSON.parse(response.body)
       expect(parsed_response).to have_key('name')
       expect(parsed_response).to have_key('users')
+    end
+  end
+
+  context '#remove_users_from_group' do
+    it 'call RemoveFromGroupService' do
+      expect(RemoveFromGroupService).to receive(:call).and_call_original
+      post :remove_users_from_group, id: users_with_group.groups.first
+    end
+    it 'remove all user from group' do
+      group = users_with_group.groups.first
+      expect(group.users.length).to be 1
+      post :remove_users_from_group, id: users_with_group.groups.first
+      expect(group.reload.users.length).to be 0
+    end
+  end
+
+  context '#remove_permissions_from_group' do
+    before do
+      group = users_with_group.groups.first
+      group.permissions << permission
+    end
+    it 'call RemoveFromGroupService' do
+      expect(RemoveFromGroupService).to receive(:call).and_call_original
+      post :remove_permissions_from_group, id: users_with_group.groups.first
+    end
+    it 'remove all permissions from group' do
+      group = users_with_group.groups.first
+      expect(group.permissions.length).to be 1
+      post :remove_permissions_from_group, id: users_with_group.groups.first
+      expect(group.reload.permissions.length).to be 0
     end
   end
 end
