@@ -14,9 +14,10 @@ class GroupsController < ApplicationController
 
   def add_permission
     permission = Permission.find(params[:permission_id])
-    result = AssignPermissionToGroupService.call(permission: permission, group: @group)
+    subject = Subject.find(params[:subject_id])
+    result = AssignPermissionToGroupService.call(permission: permission, group: @group, subject: subject)
     return render json: { error: result.error, status: 404 } unless result.success?
-    render 'users/add_premission.json.jbuilder'
+    render 'groups/add_permission.json.jbuilder'
   end
 
   def add_user
@@ -26,11 +27,15 @@ class GroupsController < ApplicationController
     render 'groups/add_user.json.jbuilder'
   end
 
+  def remove
+
+  end
+
   def load_group
     @group = Group.find(params[:id])
   end
 
   def group_params
-    params.permit(:id, :name, :permission_id, :user_id)
+    params.permit(:id, :name, :permission_id, :user_id, :subject_id)
   end
 end

@@ -3,7 +3,8 @@
 RSpec.describe AssignPermissionToGroupService, :service do
   let(:group) { create(:group) }
   let(:permission) { create(:permission) }
-  let!(:result) { described_class.call(permission: permission, group: group) }
+  let(:subject) { create(:subject) }
+  let!(:result) { described_class.call(permission: permission, group: group, subject: subject) }
 
   describe '#call' do
     context 'Invalid  Data' do
@@ -26,6 +27,10 @@ RSpec.describe AssignPermissionToGroupService, :service do
       end
       it 'assign permission to group' do
         expect(group.reload.permissions).to include(permission)
+      end
+
+      it 'assign permission to subject' do
+        expect(subject.reload.permissions).to include(permission)
       end
     end
   end

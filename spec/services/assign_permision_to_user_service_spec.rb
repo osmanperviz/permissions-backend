@@ -3,7 +3,8 @@
 RSpec.describe AssignPermisionToUserService, :service do
   let(:user) { create(:user) }
   let(:permission) { create(:permission) }
-  let!(:result) { described_class.call(permission: permission, user: user) }
+  let(:subject) { create(:subject) }
+  let!(:result) { described_class.call(permission: permission, user: user, subject: subject) }
 
   describe '#call' do
     context 'Invalid  Data' do
@@ -25,6 +26,10 @@ RSpec.describe AssignPermisionToUserService, :service do
         expect(result.success?).to be_truthy
       end
       it 'assign permission to user' do
+        expect(user.reload.permissions).to include(permission)
+      end
+
+      it 'assign permission to subject' do
         expect(user.reload.permissions).to include(permission)
       end
     end

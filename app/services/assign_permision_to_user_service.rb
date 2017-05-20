@@ -2,17 +2,22 @@
 
 class AssignPermisionToUserService
   include Interactor
-  delegate :permission, :user, :fail!, to: :context
+  delegate :permission, :user, :subject, :fail!, to: :context
 
   def call
     check_parameters
-    assign_permision
+    assign_permision_to_user
+    assign_permision_to_subject
   end
 
   private
 
-  def assign_permision
+  def assign_permision_to_user
     user.permissions << permission
+  end
+
+  def assign_permision_to_subject
+    subject.permissions << permission
   end
 
   def check_parameters
