@@ -10,16 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519184754) do
+ActiveRecord::Schema.define(version: 20170519184515) do
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
-  end
-
-  create_table "groups_permissions", id: false, force: :cascade do |t|
-    t.integer "permission_id", null: false
-    t.integer "group_id",      null: false
-    t.index ["permission_id", "group_id"], name: "index_groups_permissions_on_permission_id_and_group_id"
   end
 
   create_table "groups_users", id: false, force: :cascade do |t|
@@ -30,18 +24,9 @@ ActiveRecord::Schema.define(version: 20170519184754) do
 
   create_table "permissions", force: :cascade do |t|
     t.integer "name"
-  end
-
-  create_table "permissions_subjects", id: false, force: :cascade do |t|
-    t.integer "permission_id", null: false
-    t.integer "subject_id",    null: false
-    t.index ["permission_id", "subject_id"], name: "index_permissions_subjects_on_permission_id_and_subject_id"
-  end
-
-  create_table "permissions_users", id: false, force: :cascade do |t|
-    t.integer "user_id",       null: false
-    t.integer "permission_id", null: false
-    t.index ["user_id", "permission_id"], name: "index_permissions_users_on_user_id_and_permission_id"
+    t.integer "user_id"
+    t.integer "group_id"
+    t.integer "subject_id"
   end
 
   create_table "subjects", force: :cascade do |t|

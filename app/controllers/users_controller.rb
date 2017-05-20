@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   end
 
   def add_premission
-    permission = Permission.find(params[:permission_id])
+    permission = Permission.create(name: params[:permission_name])
     subject = Subject.find(params[:subject_id])
     result = AssignPermisionToUserService.call(permission: permission, subject: subject, user: @user)
     return render json: { error: result.error, status: 404 } unless result.success?
@@ -30,6 +30,6 @@ class UsersController < ApplicationController
   end
 
   def users_params
-    params.permit(:name, :permission_id, subject_id)
+    params.permit(:name, :permission_name, :subject_id)
   end
 end

@@ -1,19 +1,21 @@
+# frozen_string_literal: true
+
 FactoryGirl.define do
   factory :user do
-    sequence :username do |n|
+    sequence :username do |_n|
       Faker::Name.first_name
     end
-  end
 
-  factory :user_with_permissions, parent: :user do
-    after(:create) do |user|
-      user.permissions << create(:permission)
+    trait :with_permission do
+      after(:create) do |user|
+        user.permissions << create(:permission, user: user)
+      end
     end
-  end
 
-  factory :user_with_groups, parent: :user do
-    after(:create) do |user|
-      user.groups << create(:group)
+    trait :with_group do
+      after(:create) do |user|
+        user.groups << create(:group, users: [user])
+      end
     end
   end
 end

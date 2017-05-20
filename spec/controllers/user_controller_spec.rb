@@ -4,7 +4,7 @@ RSpec.describe UsersController, :controller do
   let(:user) { create(:user) }
   let(:permission) { create(:permission) }
   let(:subject_object) { create(:subject) }
-  let!(:users_with_permissions) { create_list(:user_with_permissions, 2) }
+  let!(:users_with_permissions) { create_list(:user, 2, :with_permission) }
 
   it { is_expected.to be_a(ApplicationController) }
 

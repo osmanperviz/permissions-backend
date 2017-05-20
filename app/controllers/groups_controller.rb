@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
   end
 
   def add_permission
-    permission = Permission.find(params[:permission_id])
+    permission = Permission.create(name: params[:permission_name])
     subject = Subject.find(params[:subject_id])
     result = AssignPermissionToGroupService.call(permission: permission, group: @group, subject: subject)
     return render json: { error: result.error, status: 404 } unless result.success?
@@ -38,6 +38,6 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    params.permit(:id, :name, :permission_id, :user_id, :subject_id)
+    params.permit(:id, :name, :permission_name, :user_id, :subject_id)
   end
 end
