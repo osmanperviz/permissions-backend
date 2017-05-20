@@ -2,8 +2,7 @@
 
 class AssignPermisionService
   include Interactor
-  delegate: :permission, :user, :fail!, to: :context
-  delegate: :permissions, to: :user
+  delegate :permission, :user, :fail!, to: :context
 
   def call
     check_parameters
@@ -13,7 +12,8 @@ class AssignPermisionService
   private
 
   def assign_permision
-    permissions << permission
+    user.permissions << permission
+    user.save
   end
 
   def check_parameters
@@ -22,10 +22,10 @@ class AssignPermisionService
   end
 
   def valid_permission?
-    permission.is_a?(Permission)
+    permission && permission.is_a?(Permission)
   end
 
   def valid_user?
-    user.is_a?(User)
+    user && user.is_a?(User)
   end
 end

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-
-  before_action: :load_user, only: [:show, :add_premission]
+  before_action :load_user, only: %i[show add_premission]
 
   def index
     @users = User.all.includes(:permissions, :groups, :subjects)
@@ -14,10 +13,9 @@ class UsersController < ApplicationController
   end
 
   def add_premission
-    permission = Permission.find(params[:user][:permission_id])
-    return render json(error: 'Unable to find permission', status: 404) unless permission
+    permission = Permission.find(params[:permission_id])
     result = AssignPermisionService.call(permission: permission, user: @user)
-    return render json(error: result.error, status: 404) unless action.success?
+    return render json: { error: result.error, status: 404 } unless result.success?
     render 'users/add_premission.json.jbuilder'
   end
 
@@ -26,6 +24,6 @@ class UsersController < ApplicationController
   end
 
   def users_params
-    params.require(:user).permit(:name, :permission_id)
+    params.permit(:name, :permission_id)
   end
 end
