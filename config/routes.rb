@@ -6,4 +6,11 @@ Rails.application.routes.draw do
       post :add_to_group
     end
   end
+
+  resources :groups, only: [:index, :show] do
+    member do
+      post :add_user
+      post :add_to_group
+    end
+  end
 end
