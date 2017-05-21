@@ -16,4 +16,15 @@ Rails.application.routes.draw do
       get :remove_permissions_from_group
     end
   end
+
+  resources :permissions, only: [] do
+    resources :subject, only: [] do
+    resources :user, only: [] do
+      member do
+        get :check_permissions
+        post :show_permissions
+      end
+     end
+    end
+  end
 end
