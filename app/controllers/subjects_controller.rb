@@ -1,6 +1,11 @@
 class SubjectsController < ApplicationController
 
-  before_action :load_resource
+  before_action :load_resource, except: :index
+
+  def index
+    @subjects = Subject.all.includes(:permissions)
+    render 'subjects/index.json.jbuilder'
+  end
 
   def check_permissions
     @subject.permissions.include?(@permission)
@@ -19,7 +24,7 @@ class SubjectsController < ApplicationController
   end
 
   def load_permissions_for_subject
-    Permission.where(user_id: @user.id, @subject.id)
+    Permission.where(user_id: @user.id, subject_id: @subject.id)
   end
 
 

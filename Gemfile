@@ -18,6 +18,7 @@ gem 'pry'
 # gem 'pry-debugger'
 gem 'rubocop', require: false
 gem 'jbuilder'
+gem 'rack-cors'
 
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible

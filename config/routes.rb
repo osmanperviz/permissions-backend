@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :subjects, only: [:index]
+
   resources :permissions, only: [] do
     resources :subject, only: [] do
     resources :user, only: [] do
