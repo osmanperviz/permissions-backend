@@ -12,12 +12,17 @@ class AddUserToGroupService
   private
 
   def add_to_group
+    return true if user_already_in_group?
     group.users << user
   end
 
   def check_parameters
     fail!(error: 'Not a group') unless valid_group?
     fail!(error: 'Not a user') unless valid_user?
+  end
+
+  def user_already_in_group?
+    user.groups.include? group
   end
 
   def valid_group?

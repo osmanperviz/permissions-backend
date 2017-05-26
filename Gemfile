@@ -15,10 +15,10 @@ gem 'puma', '~> 3.0'
 gem 'factory_girl_rails', '4.2.1'
 gem "interactor", "~> 3.0"
 gem 'pry'
-# gem 'pry-debugger'
 gem 'rubocop', require: false
 gem 'jbuilder'
 gem 'rack-cors'
+gem 'rename'
 
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible

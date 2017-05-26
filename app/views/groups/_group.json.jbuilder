@@ -11,6 +11,6 @@ json.users do
   json.array! @group.users, :id, :username
 end
 
-json.permissions do
+json.subject do
   json.array! @group.subjects, :id, :name
 end
